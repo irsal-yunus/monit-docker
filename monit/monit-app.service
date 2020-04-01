@@ -1,0 +1,21 @@
+[Unit]
+Description=Monit App Container
+After=network.target
+#PartOf=
+
+[Service]
+Type=forking
+User=root
+Group=root
+PIDFile=/docker/pid/candidate-app.pid
+ExecStart=/test/monit_app.sh start
+ExecStop=/test/monit_app.sh stop
+ExecStatus=/test/monit_app.sh status
+SuccessExitStatus=143
+
+# Give a reasonable amount of time for the server to start up/shut down
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target
+
